@@ -6,6 +6,7 @@
 package pkg11711357_claudiacortes;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -59,9 +60,21 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setText("Lluvias 2017");
 
+        pb_lluvias2017.setMaximum(199650);
+        pb_lluvias2017.setOrientation(1);
+
         jLabel2.setText("Max");
 
         jLabel3.setText("Dia");
+
+        pb_Laureles.setMaximum(29498);
+        pb_Laureles.setOrientation(1);
+
+        pb_Concepcion.setMaximum(49913);
+        pb_Concepcion.setOrientation(1);
+
+        pb_FranciscoMorazan.setMaximum(117793);
+        pb_FranciscoMorazan.setOrientation(1);
 
         jLabel4.setText("Los Laureles ");
 
@@ -74,12 +87,21 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jt_Represas);
 
         btn_refrescar.setText("Refrescar");
+        btn_refrescar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_refrescarMouseClicked(evt);
+            }
+        });
 
         lbl_dia.setText("DIAS");
 
         jLabel8.setText("Consumo de la población. ");
 
+        pb_consumoPoblacion.setMaximum(9275);
+
         jLabel9.setText("Generacion de Enegercia Electrica");
+
+        pb_Generacion_Energia.setMaximum(9275);
 
         btn_inicio.setText("Inicio");
         btn_inicio.addActionListener(new java.awt.event.ActionListener() {
@@ -89,8 +111,21 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_detener.setText("Detener");
+        btn_detener.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_detenerMouseEntered(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_detenerMouseClicked(evt);
+            }
+        });
 
         btn_Continuar.setText("Continuar");
+        btn_Continuar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ContinuarMouseClicked(evt);
+            }
+        });
 
         btn_Guardar.setText("Guardar Registros");
 
@@ -244,13 +279,94 @@ public class Principal extends javax.swing.JFrame {
         Raiz.add(nodo1);
         Raiz.add(nodo2);
         modelo.reload();
-        Hc = new hiloConsumo();
-        He = new HiloEnergia();
-        Laureles = new HiloRepresa();
-        Concepcion = new HiloRepresa();
-        Fco_Morazan = new HiloRepresa();
-        
+        int Consumo1=Integer.parseInt(In_1.get(1)+"");
+        int Condumo2=Integer.parseInt(In_2.get(1)+"");
+        int Consumo3=Integer.parseInt(In_3.get(1)+"");
+        //boolean Vive, boolean avanza, JProgressBar barra, int Consumo1, int Condumo2, int Consumo3
+      
+        Hc = new hiloConsumo(true,true,pb_consumoPoblacion,Consumo1,Condumo2,Consumo3,pb_Laureles,pb_Concepcion,pb_FranciscoMorazan);
+        He = new HiloEnergia(true,true,pb_Generacion_Energia,Consumo1,Condumo2,Consumo3);
+        double porcentaje_1 = Double.parseDouble(Re_1.get(1) + "");
+        double porcentaje_2 = Double.parseDouble(Re_2.get(1) + "");
+        double porcentaje_3 = Double.parseDouble(Re_3.get(1) + "");
+        //System.out.println("PORCENTAJE LOS LAURELES"+porcentaje_1);
+        ConsumoAno = new hiloConsumoAno(true, true, pb_lluvias2017, lbl_dia, Prom_Lluvia_Diaria, Indicador_crecimiento);
+        Laureles = new HiloRepresa(true, true, pb_Laureles, pb_lluvias2017, porcentaje_1);
+        Concepcion = new HiloRepresa(true, true, pb_Concepcion, pb_lluvias2017, porcentaje_2);
+        Fco_Morazan = new HiloRepresa(true, true, pb_FranciscoMorazan, pb_lluvias2017, porcentaje_3);
+        ConsumoAno.start();
+        Laureles.start();
+        Concepcion.start();
+        Fco_Morazan.start();
+        Hc.start();
+        He.start();
+          
     }//GEN-LAST:event_btn_inicioActionPerformed
+
+    private void btn_detenerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detenerMouseClicked
+//        ConsumoAno.setAvanza(false);
+//        Hc.setAvanza(false);
+//        He.setAvanza(false);
+//        Laureles.setAvanza(false);
+//        Concepcion.setAvanza(false);
+//        Fco_Morazan.setAvanza(false);
+        ConsumoAno.setVive(false);
+        Hc.setVive(false);
+        He.setVive(false);
+        Laureles.setVive(false);
+        Concepcion.setVive(false);
+        Fco_Morazan.setVive(false);
+    }//GEN-LAST:event_btn_detenerMouseClicked
+
+    private void btn_ContinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ContinuarMouseClicked
+       ConsumoAno.setVive(!false);
+        Hc.setVive(!false);
+        He.setVive(!false);
+        Laureles.setVive(!false);
+        Concepcion.setVive(!false);
+        Fco_Morazan.setVive(!false);
+        /*RECORDAR QUITAR*/
+//          ConsumoAno.setAvanza(true);
+//        Hc.setAvanza(true);
+//        He.setAvanza(true);
+//        Laureles.setAvanza(true);
+//        Concepcion.setAvanza(true);
+//        Fco_Morazan.setAvanza(true);
+      // ConsumoAno.start();
+        /*------------*/
+//         ConsumoAno.start();
+//        Hc.start();
+//        He.start();
+//        Laureles.start();
+//        Concepcion.start();
+//        Fco_Morazan.start();
+    }//GEN-LAST:event_btn_ContinuarMouseClicked
+
+    private void btn_refrescarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refrescarMouseClicked
+        int Valor1;
+        int Valor2;
+        int Valor3;
+         double porcentaje_1 = Double.parseDouble(Re_1.get(1) + "")* pb_Laureles.getValue();
+        double porcentaje_2 = Double.parseDouble(Re_2.get(1) + "")*pb_Concepcion.getValue();
+        double porcentaje_3 = Double.parseDouble(Re_3.get(1) + "")*pb_FranciscoMorazan.getValue();
+          DefaultTreeModel modelo = (DefaultTreeModel) jt_Represas.getModel();
+        DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) modelo.getRoot();
+        DefaultMutableTreeNode nodo = ( DefaultMutableTreeNode)Raiz.getChildAt(0);
+         DefaultMutableTreeNode nodo1 = ( DefaultMutableTreeNode)Raiz.getChildAt(1);
+          DefaultMutableTreeNode nodo2 = ( DefaultMutableTreeNode)Raiz.getChildAt(2);
+        nodo.removeAllChildren();
+        nodo1.removeAllChildren();
+        nodo2.removeAllChildren();
+        nodo.add(new DefaultMutableTreeNode(porcentaje_1));
+        nodo1.add(new DefaultMutableTreeNode(porcentaje_2));
+        nodo2.add(new DefaultMutableTreeNode(porcentaje_3));
+        modelo.reload();
+        JOptionPane.showMessageDialog(this,"Se han actualizado los porcentajes");
+    }//GEN-LAST:event_btn_refrescarMouseClicked
+
+    private void btn_detenerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detenerMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_detenerMouseEntered
 
     /**
      * @param args the command line arguments
@@ -327,5 +443,5 @@ public class Principal extends javax.swing.JFrame {
     HiloRepresa Laureles;
     HiloRepresa Concepcion;
     HiloRepresa Fco_Morazan;
-    
+     hiloConsumoAno ConsumoAno;
 }

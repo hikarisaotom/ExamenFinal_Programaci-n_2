@@ -5,26 +5,33 @@
  */
 package pkg11711357_claudiacortes;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
-
-public class HiloRepresa extends Thread{
-
-    boolean Vive;
+/**
+ *
+ * @author Claudia Cortes
+ */
+public class hiloConsumoAno extends Thread {
+      boolean Vive;
     boolean avanza;
     JProgressBar barra;
-    JProgressBar BarraPadre;
-    double Porcentaje;
+    JLabel dias;
+    int Prom_Lluvia_Diaria;
+    int Indicador_crecimiento;
 
-    public HiloRepresa(boolean Vive, boolean avanza, JProgressBar barra, JProgressBar BarraPadre, double Porcentaje) {
+    public hiloConsumoAno() {
+    }
+
+    public hiloConsumoAno(boolean Vive, boolean avanza, JProgressBar barra,JLabel dias, int Prom_Lluvia_Diaria, int Indicador_crecimiento) {
         this.Vive = Vive;
         this.avanza = avanza;
         this.barra = barra;
-        this.BarraPadre = BarraPadre;
-        this.Porcentaje = Porcentaje;
-    }
-    
-    public HiloRepresa() {
+        this.dias=dias;
+        this.Prom_Lluvia_Diaria=Prom_Lluvia_Diaria;
+        this.Indicador_crecimiento=Indicador_crecimiento;
     }
 
     public boolean isVive() {
@@ -51,17 +58,17 @@ public class HiloRepresa extends Thread{
         this.barra = barra;
     }
     
-  
-   
-
-    @Override
+      @Override
     public void run() {
         while(Vive){
             if (avanza) {
-               int Num_Barra=BarraPadre.getValue();
-              double  Total=Num_Barra*Porcentaje;
-               barra.setValue((int)Total);
-                System.out.println(barra.getValue());
+                int Num=Integer.parseInt(dias.getText());
+                int Total=Num*Prom_Lluvia_Diaria;
+                barra.setValue(Total);
+                dias.setText((Num+Indicador_crecimiento)+"");
+                if (Num==365) {
+                    avanza=false;
+                }
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
@@ -69,6 +76,7 @@ public class HiloRepresa extends Thread{
                 }
             }
         }
+      
     }
-
+    
 }
