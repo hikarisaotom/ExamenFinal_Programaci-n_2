@@ -10,5 +10,8 @@ package pkg11711357_claudiacortes;
  * @author Claudia Cortes
  */
 public class HiloEnergia extends Thread {
+
+    public HiloEnergia() {
+    }
     
 }

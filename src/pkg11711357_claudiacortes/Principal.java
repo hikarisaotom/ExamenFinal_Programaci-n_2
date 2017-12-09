@@ -5,6 +5,10 @@
  */
 package pkg11711357_claudiacortes;
 
+import java.util.ArrayList;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
 /**
  *
  * @author Claudia Cortes
@@ -40,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_Represas = new javax.swing.JTree();
         btn_refrescar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        lbl_dia = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         pb_consumoPoblacion = new javax.swing.JProgressBar();
         jLabel9 = new javax.swing.JLabel();
@@ -71,7 +75,7 @@ public class Principal extends javax.swing.JFrame {
 
         btn_refrescar.setText("Refrescar");
 
-        jLabel7.setText("DIAS");
+        lbl_dia.setText("DIAS");
 
         jLabel8.setText("Consumo de la población. ");
 
@@ -104,7 +108,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
+                        .addComponent(lbl_dia)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -172,7 +176,7 @@ public class Principal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel7)))
+                                    .addComponent(lbl_dia)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
@@ -209,8 +213,43 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inicioActionPerformed
-       adm_Archivo Datos= new adm_Archivo("./Examen2.txt");
-       Datos.CargarArchivo();
+        adm_Archivo Datos = new adm_Archivo("./Examen2.txt");
+        Datos.CargarArchivo();
+        /*OBETENEMOS LOS VALORES DEL ARCHIVO*/
+        IndicadorDia = Datos.getIndicadorDia();
+        Indicador_crecimiento = Datos.getIndicador_crecimiento();
+        Prom_Lluvia_Diaria = Datos.getProm_Lluvia_Diaria();
+        Indicador_Porcentaje_Represas = Datos.getIndicador_Porcentaje_Represas();
+        Re_1 = Datos.getRe_1();//Los Laureles.
+        Re_2 = Datos.getRe_2();//La concepcion.
+        Re_3 = Datos.getRe_3();//Fco. Morazan.
+        /*INDICADORES DE CONSUMO*/
+        In_1 = Datos.getIn_1();//Los Laureles.
+        In_2 = Datos.getIn_2();//La concepcion.
+        In_3 = Datos.getIn_3();//Fco. Morazan.
+        lbl_dia.setText(IndicadorDia + "");
+        /*CARGAMOS LOS VALORES AL ARBOL*/
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Represas.getModel();
+        DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) modelo.getRoot();
+        DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(Re_1.get(0));
+        DefaultMutableTreeNode sub_nodo = new DefaultMutableTreeNode(Re_1.get(1));
+        nodo.add(sub_nodo);
+        DefaultMutableTreeNode nodo1 = new DefaultMutableTreeNode(Re_2.get(0));
+        DefaultMutableTreeNode sub_nodo1 = new DefaultMutableTreeNode(Re_2.get(1));
+        nodo1.add(sub_nodo1);
+        DefaultMutableTreeNode nodo2 = new DefaultMutableTreeNode(Re_3.get(0));
+        DefaultMutableTreeNode sub_nodo2 = new DefaultMutableTreeNode(Re_3.get(1));
+        nodo2.add(sub_nodo2);
+        Raiz.add(nodo);
+        Raiz.add(nodo1);
+        Raiz.add(nodo2);
+        modelo.reload();
+        Hc = new hiloConsumo();
+        He = new HiloEnergia();
+        Laureles = new HiloRepresa();
+        Concepcion = new HiloRepresa();
+        Fco_Morazan = new HiloRepresa();
+        
     }//GEN-LAST:event_btn_inicioActionPerformed
 
     /**
@@ -260,11 +299,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jt_Represas;
+    private javax.swing.JLabel lbl_dia;
     private javax.swing.JProgressBar pb_Concepcion;
     private javax.swing.JProgressBar pb_FranciscoMorazan;
     private javax.swing.JProgressBar pb_Generacion_Energia;
@@ -272,4 +311,21 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JProgressBar pb_consumoPoblacion;
     private javax.swing.JProgressBar pb_lluvias2017;
     // End of variables declaration//GEN-END:variables
+ int IndicadorDia = 0;
+    int Indicador_crecimiento = 0;
+    int Prom_Lluvia_Diaria = 0;
+    double Indicador_Porcentaje_Represas = 0.0;
+    ArrayList Re_1 = new ArrayList();//Los Laureles.
+    ArrayList Re_2 = new ArrayList();//La concepcion.
+    ArrayList Re_3 = new ArrayList();//Fco. Morazan.
+    /*INDICADORES DE CONSUMO*/
+    ArrayList In_1 = new ArrayList();//Los Laureles.
+    ArrayList In_2 = new ArrayList();//La concepcion.
+    ArrayList In_3 = new ArrayList();//Fco. Morazan.
+    hiloConsumo Hc;
+    HiloEnergia He;
+    HiloRepresa Laureles;
+    HiloRepresa Concepcion;
+    HiloRepresa Fco_Morazan;
+    
 }

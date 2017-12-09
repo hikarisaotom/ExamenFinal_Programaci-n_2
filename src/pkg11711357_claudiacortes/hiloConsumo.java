@@ -10,5 +10,11 @@ package pkg11711357_claudiacortes;
  * @author Claudia Cortes
  */
 public class hiloConsumo extends Thread {
-    
+
+    public hiloConsumo() {
+    }
+     @Override
+    public void run() {
+      
+    }
 }
