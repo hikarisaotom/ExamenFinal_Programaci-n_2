@@ -1,0 +1,19 @@
+observaciones generales: desde el programa se debe leer este archivo 
+                         para poder darle valores iniciales a la simulacion.
+                         no se debe borrar las notas y lo unico que se puede modificar
+                         son los valores de los indicadores de la simulacion.
+ 
+nota:dia cero significa que la simulacion empezara desde el dia 1 del año hasta fin de año y los dias transcurrirran de 1 en 1
+indicador dia:0;indicador incremento:1
+
+
+nota1:la unidad de medida es miles de metros cubicos y de toda la lluvia caida solo un porcentaje de ella se guarda en las represas
+indicador promedio lluvia diaria:547;indicador porcentaje que se guarda en las represas:0.6
+
+
+nota2:del 60% que guarda en la represas por ejemplo los distribui asi 15%, 25% y 60% 
+nota3:el consumo diario se da en miles de metros cubicos, dicha agua se consume de las represas
+indicador distribucion(laureles:0.15|cocepcion:0.25|francisco morazan:0.6);indicador consumo(laureles:25|concepcion:50|francisco morazan:100)
+
+
+nota final: los valores de los indicadores puede cambiar y el programa igual debe adecuarse a los nuevos datos
