@@ -1,0 +1,10 @@
+Nombre: Claudia Patricia Cortés Pavón:
+N_Cuenta: 11711357;
+
+Parte no Funcional: 
+A-Todo Funciona.
+B-Todo Funciona.
+C-No Continua luego de darle Stop.
+D-Todo funciona.
+Observaciones:
+El decremento de la barra de porcentajes de la represa se encuentra en el hilo que controla el consumo.

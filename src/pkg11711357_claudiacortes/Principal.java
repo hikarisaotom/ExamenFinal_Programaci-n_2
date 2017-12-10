@@ -5,7 +5,11 @@
  */
 package pkg11711357_claudiacortes;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -128,6 +132,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         btn_Guardar.setText("Guardar Registros");
+        btn_Guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_GuardarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,13 +288,13 @@ public class Principal extends javax.swing.JFrame {
         Raiz.add(nodo1);
         Raiz.add(nodo2);
         modelo.reload();
-        int Consumo1=Integer.parseInt(In_1.get(1)+"");
-        int Condumo2=Integer.parseInt(In_2.get(1)+"");
-        int Consumo3=Integer.parseInt(In_3.get(1)+"");
+        int Consumo1 = Integer.parseInt(In_1.get(1) + "");
+        int Condumo2 = Integer.parseInt(In_2.get(1) + "");
+        int Consumo3 = Integer.parseInt(In_3.get(1) + "");
         //boolean Vive, boolean avanza, JProgressBar barra, int Consumo1, int Condumo2, int Consumo3
-      
-        Hc = new hiloConsumo(true,true,pb_consumoPoblacion,Consumo1,Condumo2,Consumo3,pb_Laureles,pb_Concepcion,pb_FranciscoMorazan);
-        He = new HiloEnergia(true,true,pb_Generacion_Energia,Consumo1,Condumo2,Consumo3);
+
+        Hc = new hiloConsumo(true, true, pb_consumoPoblacion, Consumo1, Condumo2, Consumo3, pb_Laureles, pb_Concepcion, pb_FranciscoMorazan);
+        He = new HiloEnergia(true, true, pb_Generacion_Energia, Consumo1, Condumo2, Consumo3);
         double porcentaje_1 = Double.parseDouble(Re_1.get(1) + "");
         double porcentaje_2 = Double.parseDouble(Re_2.get(1) + "");
         double porcentaje_3 = Double.parseDouble(Re_3.get(1) + "");
@@ -300,7 +309,7 @@ public class Principal extends javax.swing.JFrame {
         Fco_Morazan.start();
         Hc.start();
         He.start();
-          
+
     }//GEN-LAST:event_btn_inicioActionPerformed
 
     private void btn_detenerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detenerMouseClicked
@@ -310,50 +319,62 @@ public class Principal extends javax.swing.JFrame {
 //        Laureles.setAvanza(false);
 //        Concepcion.setAvanza(false);
 //        Fco_Morazan.setAvanza(false);
-        ConsumoAno.setVive(false);
-        Hc.setVive(false);
-        He.setVive(false);
-        Laureles.setVive(false);
-        Concepcion.setVive(false);
-        Fco_Morazan.setVive(false);
+  JOptionPane.showMessageDialog(this,"Deteniendo...");
+        ConsumoAno.stop();
+        Hc.stop();
+        He.stop();
+        Laureles.stop();
+        Concepcion.stop();
+        Fco_Morazan.stop();
     }//GEN-LAST:event_btn_detenerMouseClicked
 
     private void btn_ContinuarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ContinuarMouseClicked
-       ConsumoAno.setVive(!false);
-        Hc.setVive(!false);
-        He.setVive(!false);
-        Laureles.setVive(!false);
-        Concepcion.setVive(!false);
-        Fco_Morazan.setVive(!false);
+//       ConsumoAno.setVive(!false);
+//        Hc.setVive(!false);
+//        He.setVive(!false);
+//        Laureles.setVive(!false);
+//        Concepcion.setVive(!false);
+//        Fco_Morazan.setVive(!false);
         /*RECORDAR QUITAR*/
-//          ConsumoAno.setAvanza(true);
+        JOptionPane.showMessageDialog(this,"Continuando...");
+//        ConsumoAno.setAvanza(true);
 //        Hc.setAvanza(true);
 //        He.setAvanza(true);
 //        Laureles.setAvanza(true);
 //        Concepcion.setAvanza(true);
 //        Fco_Morazan.setAvanza(true);
-      // ConsumoAno.start();
+        // ConsumoAno.start();
         /*------------*/
-//         ConsumoAno.start();
-//        Hc.start();
-//        He.start();
-//        Laureles.start();
-//        Concepcion.start();
-//        Fco_Morazan.start();
+       try{
+             ConsumoAno.start();
+        Hc.start();
+        He.start();
+        Laureles.start();
+        Concepcion.start();
+        Fco_Morazan.start();
+         ConsumoAno.setAvanza(true);
+        Hc.setAvanza(true);
+        He.setAvanza(true);
+        Laureles.setAvanza(true);
+        Concepcion.setAvanza(true);
+        Fco_Morazan.setAvanza(true);
+       }catch(Exception e){
+           
+       }
     }//GEN-LAST:event_btn_ContinuarMouseClicked
 
     private void btn_refrescarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refrescarMouseClicked
         int Valor1;
         int Valor2;
         int Valor3;
-         double porcentaje_1 = Double.parseDouble(Re_1.get(1) + "")* pb_Laureles.getValue();
-        double porcentaje_2 = Double.parseDouble(Re_2.get(1) + "")*pb_Concepcion.getValue();
-        double porcentaje_3 = Double.parseDouble(Re_3.get(1) + "")*pb_FranciscoMorazan.getValue();
-          DefaultTreeModel modelo = (DefaultTreeModel) jt_Represas.getModel();
+        double porcentaje_1 = Double.parseDouble(Re_1.get(1) + "") * pb_Laureles.getValue();
+        double porcentaje_2 = Double.parseDouble(Re_2.get(1) + "") * pb_Concepcion.getValue();
+        double porcentaje_3 = Double.parseDouble(Re_3.get(1) + "") * pb_FranciscoMorazan.getValue();
+        DefaultTreeModel modelo = (DefaultTreeModel) jt_Represas.getModel();
         DefaultMutableTreeNode Raiz = (DefaultMutableTreeNode) modelo.getRoot();
-        DefaultMutableTreeNode nodo = ( DefaultMutableTreeNode)Raiz.getChildAt(0);
-         DefaultMutableTreeNode nodo1 = ( DefaultMutableTreeNode)Raiz.getChildAt(1);
-          DefaultMutableTreeNode nodo2 = ( DefaultMutableTreeNode)Raiz.getChildAt(2);
+        DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) Raiz.getChildAt(0);
+        DefaultMutableTreeNode nodo1 = (DefaultMutableTreeNode) Raiz.getChildAt(1);
+        DefaultMutableTreeNode nodo2 = (DefaultMutableTreeNode) Raiz.getChildAt(2);
         nodo.removeAllChildren();
         nodo1.removeAllChildren();
         nodo2.removeAllChildren();
@@ -361,12 +382,35 @@ public class Principal extends javax.swing.JFrame {
         nodo1.add(new DefaultMutableTreeNode(porcentaje_2));
         nodo2.add(new DefaultMutableTreeNode(porcentaje_3));
         modelo.reload();
-        JOptionPane.showMessageDialog(this,"Se han actualizado los porcentajes");
+        JOptionPane.showMessageDialog(this, "Se han actualizado los porcentajes");
     }//GEN-LAST:event_btn_refrescarMouseClicked
 
     private void btn_detenerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_detenerMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_detenerMouseEntered
+
+    private void btn_GuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GuardarMouseClicked
+        JFileChooser jfc = new JFileChooser();
+        jfc.showSaveDialog(this);
+        String Ruta = jfc.getSelectedFile().getPath() + ".txt";
+        adm_Archivo AA = new adm_Archivo(Ruta);
+        AA.setIndicadorDia(Integer.parseInt(lbl_dia.getText()));
+        Re_1.remove(1);
+        Re_2.remove(1);
+        Re_3.remove(1);
+        //ELIMINAMOS LOS VIEJOS NIVELES
+        Re_1.add(pb_Laureles.getValue());
+        Re_2.add(pb_Laureles.getValue());
+        Re_3.add(pb_Laureles.getValue());
+        AA.setRe_1(Re_1);
+        AA.setRe_2(Re_2);
+        AA.setRe_3(Re_3);
+        try {
+            AA.EscribirArchivo(pb_consumoPoblacion.getValue(), pb_Generacion_Energia.getValue(), pb_FranciscoMorazan.getValue());
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_GuardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -443,5 +487,5 @@ public class Principal extends javax.swing.JFrame {
     HiloRepresa Laureles;
     HiloRepresa Concepcion;
     HiloRepresa Fco_Morazan;
-     hiloConsumoAno ConsumoAno;
+    hiloConsumoAno ConsumoAno;
 }

@@ -5,7 +5,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -207,12 +209,42 @@ public class adm_Archivo {
     }
     }
     
-    public void EscribirArchivo(){
-        FileWriter fw;
-        BufferedWriter bw;
-        
+    public void EscribirArchivo(int valor1, int valor2, int valor3) throws IOException {
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            fw = new FileWriter(Archivo);
+            bw = new BufferedWriter(fw);
+            bw.write("Dia Actual" + IndicadorDia + "\n");
+            bw.newLine();
+            bw.write("Niveles Actuales de las Represas: ");
+            bw.newLine();
+            bw.write(Re_1.get(0) + ": " + Re_1.get(1));
+            bw.newLine();
+            bw.write(Re_2.get(0) + ": " + Re_2.get(1));
+            bw.newLine();
+            bw.write(Re_3.get(0) + ": " + Re_3.get(1));
+            bw.newLine();
+            bw.write("Consumo de Agua:" + valor1);
+            bw.newLine();
+            bw.write("Produccion de Energia:" + valor1);
+//            bw.write("Los laureles: " + valor1 + "\n");
+//             bw.newLine();
+//            bw.write("La concepcio: " + valor2 + "\n");
+//            
+//            bw.write("Francisco Morazan: " + valor3 + "\n");
+            bw.flush();
+
+            JOptionPane.showMessageDialog(null, "Archivo Guardado Exitosamente.");
+        } catch (Exception e) {
+
+        }
+         bw.close();
+
+            fw.close();
+
     }
-    
+
 }
 
 //               for (int i = 0; i <S.length; i++) {

@@ -15,6 +15,7 @@ public class HiloEnergia extends Thread {
     boolean Vive;
     boolean avanza;
     JProgressBar barra;
+    JProgressBar barraPadre;
     int Consumo1;
     int Condumo2;
     int Consumo3;
@@ -34,7 +35,7 @@ public class HiloEnergia extends Thread {
     public void run() {
        while (Vive) {
             if (avanza) {
-                int Total = Consumo1 + Condumo2 + Consumo3;
+                int Total = Consumo1;
                 barra.setValue(barra.getValue() + Total);
                 try {
                     Thread.sleep(500);
